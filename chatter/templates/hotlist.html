@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotlist</title>
+</head>
+<body>
+{{hotlist['message']}}
+{% for link in hotlist['articles'] %}
+<div>
+    <p>
+        <a href="{{ link['url']}}">{{link['title'] }}</a><br />
+        <small>{{ link['description'] }}</small>
+    </p>
+</div>
+{% endfor %}
+{% for cluster in hotlist['clusters'] %}
+<h2>Cluster</h2>
+{% for link in cluster %}
+<div>
+    <p>
+        <a href="{{ link['url']}}">{{link['title'] }}</a><br />
+        <small>{{ link['description'] }}</small>
+    </p>
+</div>
+{% endfor %}
+{% endfor %}
+</body>
+</html>

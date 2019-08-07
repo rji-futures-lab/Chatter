@@ -1,0 +1,41 @@
+---
+# Database connection settings
+db:
+  name: DATABASE_NAME
+  user: DATABASE_LOGIN
+  password: DATABASE_LOGIN_PASSWORD
+  min_conn: 1
+  max_conn: 2
+  host: 127.0.0.1
+  port: 3306
+
+# Twitter account access keys
+twitter:
+  screen_name: TWITTER_SN
+  consumer_key: TWITTER_APP_CK
+  consumer_secret: TWITTER_APP_CS
+  access_token_key: TWITTER_APP_TK
+  access_token_secret: TWITTER_APP_TS
+
+calais:
+  api_token: YOUR_TOKEN
+
+# Specify domains that should be ignored during tweet capture and
+# url maintenance
+domains_to_ignore:
+  - 'twitter.com'
+  - 'www.facebook.com'
+  - 'm.facebook.com'
+  - 'youtu.be'
+  - 'www.youtube.com'
+  - 'm.youtube.com'
+  - 'youtube.com'
+  - 'www.instagram.com'
+  - 'snickslist.com'
+  - 'spotify.com'
+  - 'open.spotify.com'
+  - 'www.twitch.tv'
+  - 'www.etsy.com'
+  - 'www.overstock.com'
+  - 'www.amazon.com'
+
