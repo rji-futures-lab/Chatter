@@ -32,7 +32,9 @@ Open `chatter/config/local_config.yaml` and fill in all the necessary configurat
 
 You'll need to credentials for Twitter's API. If you haven't already [apply](https://developer.twitter.com/en/apply-for-access) for a Twitter developer account, then create an app on that account called Chatter.
 
-You'll also need an API token for OpenCalais. To get one, [register](https://login.thomsonreuters.com/iamui/UI/createUser?app_id=Bold&realm=Bold&lang=en) for Open PermID/Open Calais. Then log into your account to display your API token.
+You'll also need an API token for OpenCalais. To get one, [register](https://login.thomsonreuters.com/iamui/UI/createUser?app_id=Bold&realm=Bold&lang=en) for Open PermID/Open Calais. Then log into your account and click on your user name in the upper right corner order to display your API token:
+
+![Where to find your OpenCalais API token](permid_screencap.png)
 
 We can test our new instance by checking to see what our current Twitter rate limits are:
 
