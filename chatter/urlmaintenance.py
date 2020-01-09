@@ -52,6 +52,8 @@ class UrlMetadataDataset:
                     # We delete these as they are known to be not desired
                     clog.debug('This is a domain to ignore: %s', r.url)
                     self.url_hashes_to_delete.append((url_hash,))
+                elif r.status_code == 404:
+                    clog.debug('This URL responds with a 404 status: %s', r.url)
                 else:
                     # Now that we know we have the true full URL strip the known tracking info so we don't duplicate
                     # url info
