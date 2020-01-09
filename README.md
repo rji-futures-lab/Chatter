@@ -2,6 +2,11 @@
 
 Twitter monitoring, aggregation and trending for local news.
 
+Chatter helps you track stories popular on Twitter that are:
+
+- Tweeted by users in a specified geography
+- Published under a domain that you care about
+
 ## Bootstrapping a local dev instance
 
 Install dependencies:
@@ -58,4 +63,54 @@ The output should look something like this:
 ('/lists/statuses', {'limit': 900, 'remaining': 900, 'reset': 1568048731})
 ('/search/tweets', {'limit': 450, 'remaining': 450, 'reset': 1568048731})
 ```
+
+## Managing domains
+
+Say you only want to track the popularity of stories published by the news organizations run by the Missouri School of Journalism at Columbia.
+
+You would start by creating a csv file (call it 'mu-sites.csv') with three columns (without headers):
+
+```
+Mizzou,https://www.columbiamissourian.com,newspaper  
+Mizzou,https://www.kbia.org,broadcaster
+Mizzou,https://www.komu.com,broadcaster
+Mizzou,https://www.missouribusinessalert.com,newsite
+```
+
+The first and third columns map to `domain_set` and `subset`, respectively, which can be useful for breaking down your analysis results. Each row must have a `domain_set` value, but `subset` is not required.
+
+Also note that the `domain` values (second column) must include the subdomain (e.g., `www`) under which a whitelisted site will publish their articles.
+
+Once your csv file is defined, you can then load those domains into Chatter:
+
+```sh
+chatter domains mu-sites.csv -co local_config.yaml
+```
+
+You can add more domains at anytime. Chatter will update the `domain_set` and `subset` values for any previously loaded domains and insert any new ones.
+
+When invoked with the `-r` flag, the `domains` command will remove all existing domains before loading new ones.
+
+## User maintainence
+
+## List maintainence
+
+## Capturing tweets
+
+### By geography
+
+```sh
+chatter geocapture 38.9364149 -92.6513689 100000 -co local_config.yaml
+```
+
+### By list
+
+
+## URL maintainence
+
+
+## Hot URLs
+
+
+
 
