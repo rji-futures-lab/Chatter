@@ -22,7 +22,7 @@ And set it up:
 psql --dbname={your database name} --file=database/schema.sql
 ```
 
-Create a copy of the config file for your local development instance settings:
+Create a copy of the config file for your local development instance:
 
 ```sh
 cp chatter/config/config.yaml chatter/config/local_config.yaml
@@ -30,9 +30,9 @@ cp chatter/config/config.yaml chatter/config/local_config.yaml
 
 Open `chatter/config/local_config.yaml` and fill in all the necessary configurations.
 
-You'll need to credentials for Twitter's API. If you haven't already [apply](https://developer.twitter.com/en/apply-for-access) for a Twitter developer account, then create an app on that account called Chatter.
+You'll need credentials for Twitter's API. If you haven't already [apply](https://developer.twitter.com/en/apply-for-access) for a Twitter developer account, then create an app on that account called Chatter.
 
-You'll also need an API token for OpenCalais. To get one, [register](https://login.thomsonreuters.com/iamui/UI/createUser?app_id=Bold&realm=Bold&lang=en) for Open PermID/Open Calais. Then log into your account and click on your user name in the upper right corner order to display your API token:
+You'll also need an API token for OpenCalais. To get one, [register](https://login.thomsonreuters.com/iamui/UI/createUser?app_id=Bold&realm=Bold&lang=en) for Open PermID/Open Calais. Then log into your account and click on your user name in the upper right corner. Then select "Display my API token".
 
 ![Where to find your OpenCalais API token](permid_screencap.png)
 
