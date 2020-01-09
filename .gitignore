@@ -64,3 +64,6 @@ chatter/config/local_config.yaml
 
 # A local directory for scratch testing
 scratch/
+
+# Any csv file (where domains are stored)
+*.csv
