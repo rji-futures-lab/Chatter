@@ -12,7 +12,7 @@ Chatter helps you track stories popular on Twitter that are:
 Install dependencies:
 
 ```sh
-install.sh
+source install.sh
 ```
 
 Create database:
