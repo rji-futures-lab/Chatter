@@ -33,7 +33,10 @@ calais_classify_language = 'English'
 
 # Chatter configs that can be over ridden in yaml file
 # Specify domains that should be ignored during tweet capture
-domains_to_ignore = {'twitter.com', 'www.youtube.com' 'www.facebook.com', 'youtu.be', 'www.instagram.com'}
+domains_to_ignore = {
+    'twitter.com', 'www.youtube.com' 'www.facebook.com', 'youtu.be',
+    'www.instagram.com'
+}
 
 # Chatter configs that can only be set in the code here
 # Specify how many times to retry a failed url call during url maintenance
