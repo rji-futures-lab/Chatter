@@ -35,6 +35,8 @@ calais_classify_language = 'English'
 # Specify domains that should be ignored during tweet capture
 domains_to_ignore = {'twitter.com', 'www.youtube.com' 'www.facebook.com', 'youtu.be', 'www.instagram.com'}
 
+commands = {}
+
 # Chatter configs that can only be set in the code here
 # Specify how many times to retry a failed url call during url maintenance
 url_maintenance_request_retries = 3

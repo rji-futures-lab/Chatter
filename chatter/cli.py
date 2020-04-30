@@ -8,6 +8,8 @@ import argparse
 import os
 import sys
 import logging
+import threading
+import time
 from pkg_resources import resource_filename, resource_string
 
 import chatter.config as config
@@ -54,6 +56,11 @@ def load_config(config_dir=DEFAULT_CONFIG_DIRECTORY, config_override_file=None):
         # Set the chatter app configurations
         if fconfig.get('domains_to_ignore', None) is not None:
             config.domains_to_ignore = fconfig['domains_to_ignore']
+
+        # Load threaded commands
+        if fconfig.get('commands', None) is not None:
+            config.commands = fconfig['commands']
+
     except Exception as e:
         print('Unable to load configuration file make sure your config.yaml exists and is accessible.')
         print(e)
@@ -95,6 +102,7 @@ CMD_USER_MAINT = 'usermaint'
 CMD_URL_MAINT = 'urlmaint'
 CMD_HOT_URLS = 'hoturls'
 CMD_HOT_URL_SERVICE = 'hoturlservice'
+CMD_THREADED = 'threaded'
 DESC_KEY = 'desc'
 USAGE_KEY = 'usage'
 CMD_TO_DESC = {
@@ -116,6 +124,8 @@ CMD_TO_DESC = {
                    USAGE_KEY: get_command_usage(CMD_HOT_URLS)},
     CMD_HOT_URL_SERVICE: {DESC_KEY: 'Start REST service for getting hot url lists',
                    USAGE_KEY: get_command_usage(CMD_HOT_URL_SERVICE)},
+    CMD_THREADED: {DESC_KEY: 'Run multiple commands on a single instance',
+                    USAGE_KEY: get_command_usage(CMD_THREADED)}
 }
 
 
@@ -123,7 +133,7 @@ class Cli:
 
     def __init__(self):
         usage = f'''{get_command_usage()}
-    
+
 The following chatter commands are available:
     {CMD_GEO_CAPTURE}     {CMD_TO_DESC[CMD_GEO_CAPTURE][DESC_KEY]}
     {CMD_LIST_CAPTURE}    {CMD_TO_DESC[CMD_LIST_CAPTURE][DESC_KEY]}
@@ -134,7 +144,8 @@ The following chatter commands are available:
     {CMD_TWITTER_RL}      {CMD_TO_DESC[CMD_TWITTER_RL][DESC_KEY]}
     {CMD_HOT_URLS}        {CMD_TO_DESC[CMD_HOT_URLS][DESC_KEY]}
     {CMD_HOT_URL_SERVICE}  {CMD_TO_DESC[CMD_HOT_URL_SERVICE][DESC_KEY]}
-    
+    {CMD_THREADED}         {CMD_TO_DESC[CMD_THREADED][DESC_KEY]}
+
 '%(prog)s <command> -h' will get command specific help
     '''
         parser = argparse.ArgumentParser(usage=usage)
@@ -147,6 +158,45 @@ The following chatter commands are available:
         # Need to move this to after the cd and co commands are processed
         # load_config()
         getattr(self, args.command)(get_cmd_parser(args.command))
+
+    # run multiple commands (saves on per-instance overhead)
+    # in this case, the commands are loaded from the config
+    def threaded(self,parser):
+        args = parser.parse_args(sys.argv[2:])
+        process_base_args(args)
+        # for each command in the config
+        for c in config.commands:
+            print(c)
+            # run the command on a thread with the provided args
+            if c['cmd'] == 'geocapture':
+                x = threading.Thread(target=twitter.capture_geo,args=(c['long'],c['lat'],c['radius'],0))
+                x.start()
+            elif c['cmd'] == 'listcapture':
+                x = threading.Thread(target=twitter.capture_user_lists)
+                x.start()
+            elif c['cmd'] == 'listmaint':
+                x = threading.Thread(target=userm.maintain_lists)
+                x.start()
+            elif c['cmd'] == 'usermaint':
+                x = threading.Thread(target=userm.maintain_users)
+                x.start()
+            elif c['cmd'] == 'urlmaint':
+                x = threading.Thread(target=urlm.maintain_urls)
+                x.start()
+            elif c['cmd'] == 'twitterrl':
+                x = threading.Thread(target=twitter.get_rate_limit_status,args=(c['user_limits']))
+                x.start()
+            elif c['cmd'] == 'hoturls':
+                x = threading.Thread(target=urla.dump_hot_list,args=c)
+                x.start()
+            # elif c['cmd'] == 'hoturlservice':
+            #     x = threading.Thread(target=urla.hot_list_service)
+            #     x.start()
+            else:
+                print(f"command {c['cmd']} not supported for threading")
+        urla.hot_list_service()
+        # while True:
+        #     time.sleep(600)
 
     def geocapture(self, parser):
         parser.add_argument('lat', type=float, help='The latitude for the tweet epicenter')
