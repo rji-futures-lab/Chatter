@@ -19,8 +19,15 @@ _conn_pool = None
 def get_db_connection():
     global _conn_pool
     if _conn_pool is None:
-        _conn_pool = pool.SimpleConnectionPool(minconn=config.db_min_conn, maxconn=config.db_max_conn, host=config.db_host,
-                                               dbname=config.db_name, user=config.db_user, password=config.db_password)
+        _conn_pool = pool.SimpleConnectionPool(
+            host=config.db_host,
+            port=config.db_port,
+            minconn=config.db_min_conn,
+            maxconn=config.db_max_conn,
+            dbname=config.db_name,
+            user=config.db_user,
+            password=config.db_password
+        )
     try:
         conn = _conn_pool.getconn()
         yield conn

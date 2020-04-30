@@ -59,8 +59,14 @@ target/
 venv/
 ENV/
 
-# Your local dev configuration file
+# Your local configuration files
 chatter/config/local_config.yaml
+chatter/config/prod_config.yaml
 
 # A local directory for scratch testing
 scratch/
+
+# Any csv file (where domains are stored)
+*.csv
+
+
