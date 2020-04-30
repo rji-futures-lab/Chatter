@@ -38,6 +38,8 @@ domains_to_ignore = {
     'www.instagram.com'
 }
 
+commands = {}
+
 # Chatter configs that can only be set in the code here
 # Specify how many times to retry a failed url call during url maintenance
 url_maintenance_request_retries = 3

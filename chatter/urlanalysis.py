@@ -144,4 +144,5 @@ def hot_list_request():
 def hot_list_service():
     app = Flask('chatter')
     app.add_url_rule(rule='/', endpoint='hotlist', view_func=hot_list_request)
-    app.run(debug=True)
+    app.run(host="0.0.0.0",port=5000)
+    #app.run(debug=True)
