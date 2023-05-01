@@ -8,7 +8,7 @@ requests-oauthlib>=1.2.0
 TwitterAPI>=2.5.9
 urllib3>=1.24.3
 beautifulsoup4==4.7.1
-Flask==1.1.1
+Flask==2.3.2
 gensim==3.8.0
 lxml==4.5.0
 nltk>=3.4.5
